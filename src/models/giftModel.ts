@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const giftSchema = new mongoose.Schema({
   giver_id: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: 'User',
     required: true
   },
   recipient_id: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: 'User',
     required: true
   },
@@ -17,7 +17,7 @@ const giftSchema = new mongoose.Schema({
   },
   description: String,
   group_id: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: 'Group',
     required: true // Marked as required
   }

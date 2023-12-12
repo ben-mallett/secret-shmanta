@@ -8,8 +8,14 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} 
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 
+export enum GroupListModes {
+    SOME,
+    ALL
+}
+
 type GroupListProps = {
-    ids: string[]
+    ids: string[],
+    mode: GroupListModes
 }
 
 export default function GroupList(props: GroupListProps) {
@@ -18,17 +24,24 @@ export default function GroupList(props: GroupListProps) {
     useEffect(() => {
         const getGroupData = async () => {
             try {
-                const response = await axios.get('/api/groups/by/ids', {
-                    params: {
-                        groupIds: props.ids.join(',') 
-                    }
-                });
-                const groups = response.data.groups;
-                setGroupData(groups);
+                if (props.mode === GroupListModes.SOME) {
+                    const response = await axios.get('/api/groups/by/ids', {
+                        params: {
+                            groupIds: props.ids.join(',') 
+                        }
+                    });
+                    const groups = response.data.groups;
+                    setGroupData(groups);
+                } else {
+                    const response = await axios.get('/api/groups');
+                    const groups = response.data.groups;
+                    setGroupData(groups);
+                }
+                
             } catch (error: any) {
                 toast({
                     title: "Something went wrong",
-                    description: `Error on fetching gift exchange groups ${error.message}`
+                    description: `Error on fetching gift exchange groups ${error.response.data.message}`
                 })
             }
         }
@@ -38,13 +51,13 @@ export default function GroupList(props: GroupListProps) {
     }, []);
 
     return (
-        <div className="flex flex-col gap-4 justify-center items-center w-4/5">
+        <Card className="flex flex-col justify-center items-center w-4/5 mt-4 p-4 mb-4">
             {
                 groupData.map((group, i) => {
                     return (
-                        <Link className="w-full" href={`/groups/${group._id}`} key={i}>
-                            <Card className="w-full m-4">
-                                <CardHeader className="flex flex-row justify-between gap-10 items-start">
+                        <Link className="w-4/5" href={`/groups/${group._id}`} key={i}>
+                            <Card className="w-full m-2">
+                                <CardHeader className="flex flex-row justify-between items-start">
                                     <div>
                                         <CardTitle>{group.name}</CardTitle>
                                         <CardDescription>{group.description}</CardDescription>
@@ -56,6 +69,6 @@ export default function GroupList(props: GroupListProps) {
                     )
                 })
             }
-        </div>
+        </Card>
     );
 }

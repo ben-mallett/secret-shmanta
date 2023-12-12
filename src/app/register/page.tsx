@@ -45,10 +45,10 @@ export default function Register() {
             if (confirmedPassword === credentials.password) {
                 const response: any = await axios.post("/api/users/register", {...credentials, firstName, lastName, role});
                 if (!response.data.error) {
-                    router.push("/");
+                    router.push("/login");
                 } else {
                     toast({
-                        title: "Error logging in account",
+                        title: "Error registering account",
                         description: `${response.data.error}`
                     });
                 }
@@ -59,10 +59,10 @@ export default function Register() {
                 });
                 setCredentials({...credentials, password: ""});
             }
-        } catch (error) {
+        } catch (error: any) {
             toast({
                 title: "Login Failed",
-                description: `Something went wrong with your login request.\n ${error}`,
+                description: `Something went wrong with your login request.\n ${error.response.data.error}`,
             })
             setCredentials({username: "", password: ""});
         } finally {

@@ -10,9 +10,10 @@ import Link from "next/link";
 import Snowfall from "react-snowfall";
 import { CircleUserRound } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import GroupList from "@/components/group-list";
+import GroupList, { GroupListModes } from "@/components/group-list";
 import GiftList, { GiftListModes } from "@/components/gift-list";
 import Gift from "@/models/giftModel";
+import { Badge } from "@/components/ui/badge";
 
 export default function Profile() {
     const { user, setUserState } = useUser();
@@ -29,7 +30,7 @@ export default function Profile() {
             } catch (error : any) {
                 toast({
                     title: "Something went wrong",
-                    description: `Error fetching user data: ${error.message}`
+                    description: `Error fetching user data: ${error.response.data.message}`
                 })
             }
         }
@@ -38,12 +39,11 @@ export default function Profile() {
             try {
                 const response = await axios.get("/api/profile");
                 const profile = response.data.profile;
-                console.log(`Received profile data ${JSON.stringify(profile)}`);
                 setProfileData(profile)
             } catch (error : any) {
                 toast({
                     title: "Something went wrong",
-                    description: `Error on fetching profile data: ${error.message}`
+                    description: `Error on fetching profile data: ${error.response.data.message}`
                 })
             }
         }
@@ -66,10 +66,13 @@ export default function Profile() {
             />
             <div className="w-full h-full flex flex-row justify-center align-center">
                 <Card className="m-5 w-full lg:w-3/4 xl:w-2/3 2xl:w-2/3 flex flex-col gap-4 justify-start">
-                    <div className="flex flex-col self-center m-10">
-                        <Avatar className="self-center w-45 h-45">
-                            <AvatarFallback><CircleUserRound className="self-center" color="grey" strokeWidth={1} size={60}/></AvatarFallback>
-                        </Avatar>
+                    <div className="flex flex-col self-center m-10 w-4/5">
+                        <div className="flex flex-col justify-center items-center gap-3 w-full">
+                            <Avatar className="self-center w-45 h-45">
+                                <AvatarFallback><CircleUserRound className="self-center" color="grey" strokeWidth={1} size={60}/></AvatarFallback>
+                            </Avatar>
+                            <Badge variant="outline">{user?.role}</Badge>
+                        </div>
                         <h1 className="self-center m-5 scroll-m-20 text-4xl tracking-tight lg:text-5xl">
                             {user?.username}
                         </h1>
@@ -77,14 +80,20 @@ export default function Profile() {
                             {profileData?.bio}
                         </p>
                         <h3 className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">Links</h3>
-                        <ul className="mt-6 ml-6 list-disc [&>li]:mt-1">
-                            {profileData?.links.map((link, i) => <li key={i}><Link href={link} style={{ textDecoration: 'underline' }}>{link}</Link></li>)}
-                        </ul>
+                        { profileData ? (profileData.links.length > 0 ? 
+                            <ul className="mt-6 ml-6 list-disc [&>li]:mt-1">
+                                {profileData?.links.map((link, i) => <li key={i}><Link href={link} style={{ textDecoration: 'underline' }}>{link}</Link></li>)}
+                            </ul> : <p>No links associated with this elf!</p>)
+                        : <p>Loading...</p>
+                        }
                         <h3 className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">Groups</h3>
-                        <div className="flex flex-col justify-center items-center w-full">
-                            {profileData !== null && profileData.group_ids.length > 0 && <GroupList ids={profileData.group_ids}/>}
-                        </div>
-                        <h3 className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">Gifts</h3>
+                        { profileData ? (profileData.group_ids.length > 0 ? 
+                            <div className="flex flex-col justify-center items-center w-full">
+                                {profileData !== null && profileData.group_ids.length > 0 && <GroupList ids={profileData.group_ids} mode={GroupListModes.SOME}/>}
+                            </div> : <p>No groups associated with this elf!</p>)
+                        : <p>Loading...</p>
+                        }
+                        <h3 className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">Wish List</h3>
                         {/* {user?._id !== undefined && <GiftList id={user._id} mode={GiftListModes.GIVER}/>} */}
                     </div>
                 </Card>

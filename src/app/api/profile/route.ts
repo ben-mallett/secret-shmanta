@@ -30,7 +30,6 @@ export async function PUT(request: NextRequest) {
         let user = null;
         if (user_db_response.acknowledged) {
             user = await User.findOne({_id: id});
-            console.log(user);
         } else {
             throw new Error("User update not acknowledged");
         }
@@ -40,7 +39,6 @@ export async function PUT(request: NextRequest) {
         let profile = null
         if (db_response.acknowledged) {
             profile = await Profile.findOne({user_id: id});
-            console.log(profile);
         } else {
             throw new Error("Profile update not acknowledged");
         }

@@ -32,11 +32,9 @@ export default function Login() {
         setLoading(true);
         try {
             const response: any = await axios.post("/api/users/login", credentials);
-            console.log(response);
             setUserState(response.data.user);
             router.push("/");
         } catch (error: any) {
-            console.log(error);
             toast({
                 title: "Login Failed",
                 description: `${error.response.data.error}`,

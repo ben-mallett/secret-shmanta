@@ -1,19 +1,18 @@
-import { getTokenData } from "@/lib/tokenUtils";
 import { NextRequest, NextResponse } from "next/server";
-import Group from "@/models/groupModel";
 import { connect } from "@/db/config";
+import Profile from "@/models/profileModel";
 
 connect();
 
 export async function GET(request: NextRequest) {
     try {
-        const { id, username, role } = getTokenData(request);
+        const url = new URL(request.url)
+        const user_id = url.searchParams.get("userId")
 
-        const groups = await Group.find({host_id: id});
-
+        const profile = await Profile.findOne({user_id: user_id});
         return NextResponse.json({
-            message: "Got all groups from host",
-            groups: groups
+            message: "Got user with id",
+            profile: profile
         })
     } catch (error : any) {
         return NextResponse.json({error: error.message}, {status: 400})

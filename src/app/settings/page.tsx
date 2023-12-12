@@ -25,7 +25,7 @@ export default function Settings() {
             } catch (error : any) {
                 toast({
                     title: "Something went wrong",
-                    description: `Error on fetching user data: ${error.message}`
+                    description: `Error on fetching user data: ${error.response.data.message}`
                 })
             }
         }
@@ -34,12 +34,11 @@ export default function Settings() {
             try {
                 const response = await axios.get("/api/profile");
                 const profile = response.data.profile;
-                console.log(`Received profile data ${JSON.stringify(profile)}`);
                 setProfileData(profile)
             } catch (error : any) {
                 toast({
                     title: "Something went wrong",
-                    description: `Error on fetching profile data: ${error.message}`
+                    description: `Error on fetching profile data: ${error.response.data.message}`
                 })
             }
         }

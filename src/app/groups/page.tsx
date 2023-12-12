@@ -8,7 +8,7 @@ import { useUser } from "@/components/user-provider";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import Snowfall from "react-snowfall";
-import GroupList from "@/components/group-list";
+import GroupList, { GroupListModes } from "@/components/group-list";
 
 export default function Groups() {
     const { toast } = useToast();
@@ -23,7 +23,7 @@ export default function Groups() {
             } catch (error : any) {
                 toast({
                     title: "Error fetching groups",
-                    description: `${error.message}`
+                    description: `${error.response.data.message}`
                 })
             }
         }
@@ -42,11 +42,15 @@ export default function Groups() {
                 snowflakeCount={300}
             />
             <div className="flex flex-col justify-center items-center w-full">
-                {
-                    groupIds.length > 0 ?
-                    <GroupList ids={groupIds}/> : 
-                    <h2>Groups not found</h2>
-                }
+                <Card className="flex flex-col justify-center items-center w-4/5 m-10">
+                    <h1 className="m-5 scroll-m-20 text-4xl tracking-tight lg:text-5xl">Giving Groups</h1>
+                    <p>Explore all the different groups of elves focused on spreading holiday cheer! Click on a group to see more information!</p>
+                    {
+                        groupIds.length > 0 ?
+                        <GroupList ids={groupIds} mode={GroupListModes.ALL}/> : 
+                        <h2>Groups not found</h2>
+                    }
+                </Card>
             </div>
         </div>
     )

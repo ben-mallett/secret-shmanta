@@ -45,7 +45,7 @@ export default function GiftList(props: GiftListProps) {
             } catch (error: any) {
                 toast({
                     title: "Something went wrong",
-                    description: `Error on fetching gifts ${error.message}`
+                    description: `Error on fetching gifts ${error.response.data.message}`
                 })
             }
         }

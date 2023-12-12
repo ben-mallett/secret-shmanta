@@ -8,6 +8,7 @@ import { useUser } from "@/components/user-provider";
 import { Card } from "@/components/ui/card";
 import { SidebarNav } from "@/components/ui/sidebar-nav";
 import Snowfall from 'react-snowfall'
+import { DeleteUser } from "@/components/delete-user";
 
 export default function Settings() {
     const { user, setUserState } = useUser();
@@ -22,7 +23,7 @@ export default function Settings() {
             } catch (error : any) {
                 toast({
                     title: "Something went wrong",
-                    description: `Error on fetching user data: ${error.message}`
+                    description: `Error on fetching user data: ${error.response.data.message}`
                 })
             }
         }
@@ -46,6 +47,9 @@ export default function Settings() {
                     <h1 className="ml-10 mt-10 scroll-m-20 text-4xl tracking-tight lg:text-5xl">
                         Manage Users
                     </h1>
+                    <div className="pl-10">
+                        <DeleteUser/>
+                    </div>
                 </Card>
             </div>
         </div>

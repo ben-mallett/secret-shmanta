@@ -7,15 +7,23 @@ connect();
 
 export async function GET(request: NextRequest) {
     try {
-        const { id, username, role } = getTokenData(request);
+        let role = "PARTICIPANT"
+        try {
+            const { id, user, userRole } = getTokenData(request);
+            role = userRole
+        } catch (error: any) {
+            console.log("User not logged in");
+        }
+
         let users = null;
         if (role !== "ADMIN") {
             users = await User.find({}, { password: 0, firstName: 0, lastName: 0 })
         } else {
             users = await User.find({})
+            console.log(users)
         }
         return NextResponse.json({
-            message: "Got profile info",
+            message: "Got user info",
             users: users
         })
     } catch (error : any) {

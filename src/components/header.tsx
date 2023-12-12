@@ -26,8 +26,8 @@ export default function Header() {
                 }
             } catch (error) {
                 toast({
-                    title: "User data fetch error",
-                    description: "Log in to see data"
+                    title: "Anonymous Mode",
+                    description: "Currently in anonymous mode. Log in to get the full experience!"
                 })
             }
         }

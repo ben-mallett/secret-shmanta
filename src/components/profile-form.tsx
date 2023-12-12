@@ -70,7 +70,6 @@ export function ProfileForm(props: ProfileFormProps) {
             }
 
             const response = await axios.put("/api/profile", data)
-            console.log(response);
 
             toast({
                 title: "Updated your information!",
@@ -81,7 +80,6 @@ export function ProfileForm(props: ProfileFormProps) {
                 ),
             })
         } catch (error : any) {
-            console.log(error);
             toast({
                 title: "Error updating data",
                 description: "Something went wrong"

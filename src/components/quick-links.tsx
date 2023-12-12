@@ -76,6 +76,7 @@ export function QuickLinks() {
             </DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>
+        <DropdownMenuLabel>Explore</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <Link href="/groups">
@@ -103,18 +104,15 @@ export function QuickLinks() {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
-          <DropdownMenuItem>
-            <Plus className="mr-2 h-4 w-4" />
-            <span>Join Groups</span>
-            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-          </DropdownMenuItem>
         <DropdownMenuLabel>Platform</DropdownMenuLabel>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Github className="mr-2 h-4 w-4" />
-          <span>GitHub</span>
-        </DropdownMenuItem>
+        <Link href="https://github.com/ben-mallett/secret-shmanta">
+          <DropdownMenuItem>
+            <Github className="mr-2 h-4 w-4" />
+            <span>GitHub</span>
+          </DropdownMenuItem>
+        </Link>
         <Link href="https://dummyjson.com/docs/products">
           <DropdownMenuItem>
             <Cloud className="mr-2 h-4 w-4" />

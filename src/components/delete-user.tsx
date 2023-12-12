@@ -23,27 +23,27 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 
-const DeleteGroupFormSchema = z.object({
+const DeleteUserFormSchema = z.object({
   id: z.string()
 })
 
-type DeleteGroupFormValues = z.infer<typeof DeleteGroupFormSchema>
+type DeleteUserFormValues = z.infer<typeof DeleteUserFormSchema>
 
-export function DeleteGroup() {
-    const [groups, setGroups] = useState<{_id: string, host_id: string, members: string[], name: string, description: string}[]>([]);
+export function DeleteUser() {
+    const [users, setUsers] = useState<{_id: string, username: string, firstName: string, lastName: string, role: string}[]>([]);
 
-    const form = useForm<DeleteGroupFormValues>({
-        resolver: zodResolver(DeleteGroupFormSchema),
+    const form = useForm<DeleteUserFormValues>({
+        resolver: zodResolver(DeleteUserFormSchema),
         mode: "onChange",
     })
 
-    async function deleteGroup(id: string) {
+    async function deleteUser(id: string) {
         try {
 
-            const response = await axios.delete("/api/groups/by/id", { data: {groupId: id} })
+            const response = await axios.delete("/api/users/by/id", { data: {userId: id} })
 
             toast({
-                title: "Group deleted! Sad to see it go...",
+                title: "Elf deleted! Good riddance!",
                 description: (
                     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
                         <code className="text-white">{JSON.stringify(id, null, 2)}</code>
@@ -58,17 +58,16 @@ export function DeleteGroup() {
         }
     }
 
-    async function onSubmit(data: DeleteGroupFormValues) {
-        await deleteGroup(data?.id);
+    async function onSubmit(data: DeleteUserFormValues) {
+        await deleteUser(data?.id);
     }
 
     useEffect(() => {
-        const getGroupData = async () => {
+        const getUserData = async () => {
             try {
-                const response = await axios.get('/api/groups/by/hostid');
-
-                const groups = response.data.groups;
-                setGroups(groups);
+                const response = await axios.get('/api/users');
+                const users = response.data.users;
+                setUsers(users);
             } catch (error: any) {
                 toast({
                     title: "Uh oh! Something went wrong:",
@@ -76,7 +75,7 @@ export function DeleteGroup() {
                 })
             }
         }
-        getGroupData().catch((e) => {
+        getUserData().catch((e) => {
             console.log(e)
         });
     }, []);
@@ -91,19 +90,19 @@ export function DeleteGroup() {
                     name="id"
                     render={({ field }) => (
                         <FormItem>
-                        <FormLabel>Group to Delete</FormLabel>
+                        <FormLabel>User to Delete</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
                             <SelectTrigger>
-                                <SelectValue placeholder="Select which group you want to delete!" />
+                                <SelectValue placeholder="Select which user you want to delete." />
                             </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                                {
-                                    groups.length > 0 && 
-                                    groups.map((group) => {
+                                {   users &&
+                                    users.length > 0 && 
+                                    users.map((user) => {
                                         return (
-                                            <SelectItem value={group._id}>{group.name}</SelectItem>
+                                            <SelectItem value={user._id}>{user.username}</SelectItem>
                                         )
                                     })
                                 }
@@ -113,7 +112,7 @@ export function DeleteGroup() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" variant="destructive">Delete Group</Button>
+                <Button type="submit" variant="destructive">Delete User</Button>
             </form>
             </Form>
         </div>

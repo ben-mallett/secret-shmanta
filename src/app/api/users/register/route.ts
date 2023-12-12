@@ -1,6 +1,6 @@
 import { connect } from "@/db/config";
 import User from "@/models/userModel";
-import Profile from "@/app/profile/page";
+import Profile from "@/models/profileModel";
 import { NextRequest, NextResponse } from "next/server";
 
 connect();
@@ -8,7 +8,6 @@ connect();
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        console.log(body);
 
         const {firstName, lastName, role, username, password} = body;
         
@@ -25,13 +24,18 @@ export async function POST(request: NextRequest) {
         })
         const committed = await created.save();
 
-        // const profile_created = new Profile({
-        //     username,
-        //     user_id: created._id,
-        //     bio: "",
-        //     links: [],
-        //     group_ids: []
-        // });
+        const bio = "";
+        const links: string[] = [];
+        const group_ids: string[] = [];
+        const user_id = created._id;
+        const profile_created = new Profile({
+            user_id,
+            bio,
+            links,
+            group_ids
+        });
+
+        const prof_committed = await profile_created.save();
 
         return NextResponse.json({message: "Welcome to the workshop!", success: true, committed})
     } catch (error: any) {

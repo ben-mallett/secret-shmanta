@@ -7,7 +7,6 @@ connect();
 
 export async function GET(request: NextRequest) {
     try {
-        const { id, username, role } = getTokenData(request);
         const url = new URL(request.url)
         const group_ids = url.searchParams.get("groupIds")?.split(',')
         const groups = await Group.find({ _id: { $in: group_ids } })

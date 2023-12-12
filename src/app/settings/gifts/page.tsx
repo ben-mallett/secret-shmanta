@@ -22,7 +22,7 @@ export default function Settings() {
             } catch (error : any) {
                 toast({
                     title: "Something went wrong",
-                    description: `Error on fetching user data: ${error.message}`
+                    description: `Error on fetching user data: ${error.response.data.message}`
                 })
             }
         }

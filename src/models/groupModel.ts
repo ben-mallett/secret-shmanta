@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const groupsSchema = new mongoose.Schema({
     host_id: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'User',
         required: true
     },
     members: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'User'
     }],
     name: {
