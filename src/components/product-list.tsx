@@ -38,6 +38,7 @@ export default function ProductList(props: ProductListProps) {
             toast({
                 title: "Successfully removed item from wishlist"
             })
+            setUserWishlistIds(userWishlistIds.filter((id) => id !== productId))
         } catch (error : any) {
             toast({
                 title: "Failed to remove item from wishlist",
@@ -55,6 +56,7 @@ export default function ProductList(props: ProductListProps) {
             toast({
                 title: "Successfully added item to wishlist"
             })
+            setUserWishlistIds([...userWishlistIds, productId])
         } catch (error : any) {
             toast({
                 title: "Failed to remove item from wishlist",
