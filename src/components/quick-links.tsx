@@ -98,10 +98,12 @@ export function QuickLinks() {
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                <DropdownMenuItem>
-                  <Search className="mr-2 h-4 w-4" />
-                  <span>Explore Gifts</span>
-                </DropdownMenuItem>
+                <Link href={`/search`}>
+                  <DropdownMenuItem>
+                    <Search className="mr-2 h-4 w-4" />
+                    <span>Explore Gifts</span>
+                  </DropdownMenuItem>
+                </Link>
                 <Link href={`/wishlists/${user?._id}`}>
                   <DropdownMenuItem>
                     <ScrollText className="mr-2 h-4 w-4" />

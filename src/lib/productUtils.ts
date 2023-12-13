@@ -18,3 +18,19 @@ export const searchProducts = async (query: string) => {
     return data;
 }
 
+export const getDailyProducts = async() => {
+    function getRandomInt(min: number, max: number) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    const productIds = [1, 1, 1, 1, 1].map((productId) => productId * getRandomInt(1, 99))
+    console.log(productIds);
+
+    const products = await Promise.all(productIds.map(async (productId) => {
+        return await getProductById(productId);
+    }))
+    console.log(products);
+    return products;
+}

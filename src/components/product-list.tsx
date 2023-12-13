@@ -95,22 +95,22 @@ export default function ProductList(props: ProductListProps) {
             {
                 props.products.map((product, i) => {
                     return (
-                            <Card key={i} className="w-full m-2">
-                                <CardHeader className="flex flex-row justify-between gap-10 items-start">
-                                    <Link href={`/product/${product.id}`}>
-                                        <div>
-                                            <CardTitle>{product.title}</CardTitle>
-                                            <CardDescription>{product.description}</CardDescription>
-                                        </div>
-                                    </Link>
-                                    {user !== null ? (userWishlistIds.includes(product.id) ? <Button className="self-end" variant="destructive" onClick={() => removeFromWishlist(product.id)}>Remove from Wishlist</Button> : <Button className="self-end" onClick={() => addToWishlist(product.id)}>Add to Wishlist</Button>) : 
-                                    <Link href="/login" className="self-end">
-                                        <Button>
-                                            Log in to save product.
-                                        </Button>
-                                    </Link>}
-                                </CardHeader>
-                            </Card>
+                        <Card key={i} className="w-full m-2">
+                            <CardHeader className="flex flex-row justify-between gap-10 items-start">
+                                <Link href={`/product/${product.id}`}>
+                                    <div>
+                                        <CardTitle>{product.title}</CardTitle>
+                                        <CardDescription>{product.description}</CardDescription>
+                                    </div>
+                                </Link>
+                                {user !== null ? (userWishlistIds.includes(product.id) ? <Button className="self-end" variant="destructive" onClick={() => removeFromWishlist(product.id)}>Remove from Wishlist</Button> : <Button className="self-end" onClick={() => addToWishlist(product.id)}>Add to Wishlist</Button>) : 
+                                <Link href="/login" className="self-end">
+                                    <Button>
+                                        Log in to save product.
+                                    </Button>
+                                </Link>}
+                            </CardHeader>
+                        </Card>
                     )
                 })
             }
