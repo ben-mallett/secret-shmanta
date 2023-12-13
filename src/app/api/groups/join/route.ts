@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
 
         const updated = await Group.updateOne({_id: group_id}, { $push: {members: id}})
 
-        const updated_prof = await Profile.updateOne({user_id: id}, { $push: {group_ids: group_id}})
+        const updated_prof = await Profile.updateOne({user_id: id}, { $addToSet: {group_ids: group_id}})
 
         if (updated.acknowledged && updated_prof.acknowledged) {
             const response = NextResponse.json(

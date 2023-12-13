@@ -2,6 +2,7 @@ import { connect } from "@/db/config";
 import User from "@/models/userModel";
 import Profile from "@/models/profileModel";
 import { NextRequest, NextResponse } from "next/server";
+import Wishlist from "@/models/wishlistModel";
 
 connect();
 
@@ -28,14 +29,22 @@ export async function POST(request: NextRequest) {
         const links: string[] = [];
         const group_ids: string[] = [];
         const user_id = created._id;
+
         const profile_created = new Profile({
             user_id,
             bio,
             links,
             group_ids
         });
+        await profile_created.save();
 
-        const prof_committed = await profile_created.save();
+        const gifts: string[] = [];
+        
+        const wishlist_created = new Wishlist({
+            user_id,
+            gifts
+        })
+        await wishlist_created.save();
 
         return NextResponse.json({message: "Welcome to the workshop!", success: true, committed})
     } catch (error: any) {

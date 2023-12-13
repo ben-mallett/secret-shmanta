@@ -17,11 +17,6 @@ const sidebarNavItems = [
       roles: ["PARTICIPANT", "HOST", "ADMIN"]
     },
     {
-      title: "Gifts",
-      href: "/settings/gifts",
-      roles: ["PARTICIPANT", "HOST", "ADMIN"]
-    },
-    {
       title: "Groups",
       href: "/settings/groups",
       roles: ["HOST", "ADMIN"]

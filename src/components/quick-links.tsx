@@ -13,7 +13,6 @@ import {
   User,
   Users,
 } from "lucide-react"
-import * as userClient from "@/lib/users/client"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -33,9 +32,10 @@ import { toast } from "./ui/use-toast"
 import Link from "next/link"
 import axios from "axios";
 import { useUser } from "./user-provider"
+import { Component } from "lucide-react"
 
 export function QuickLinks() {
-  const { setUserState } = useUser()
+  const { user, setUserState } = useUser()
 
   const logout = async () => {
     try {
@@ -85,6 +85,12 @@ export function QuickLinks() {
               <span>All Groups</span>
             </DropdownMenuItem>
           </Link>
+          <Link href="/users">
+            <DropdownMenuItem>
+              <Component className="mr-2 h-4 w-4" />
+              <span>All Elves</span>
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
               <Gift className="mr-2 h-4 w-4" />
@@ -96,11 +102,13 @@ export function QuickLinks() {
                   <Search className="mr-2 h-4 w-4" />
                   <span>Explore Gifts</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <ScrollText className="mr-2 h-4 w-4" />
-                  <span>Wishlist</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
+                <Link href={`/wishlists/${user?._id}`}>
+                  <DropdownMenuItem>
+                    <ScrollText className="mr-2 h-4 w-4" />
+                    <span>Wishlist</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                </Link>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
@@ -120,11 +128,13 @@ export function QuickLinks() {
           </DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <LogOut className="mr-2 h-4 w-4" />
-          <Link href="/" onClick={logout}><span>Log out</span></Link>
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem>
+        <Link href="/" onClick={logout}>
+          <DropdownMenuItem>
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>Log out</span>
+            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   )

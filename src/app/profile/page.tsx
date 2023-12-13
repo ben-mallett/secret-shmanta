@@ -14,6 +14,7 @@ import GroupList, { GroupListModes } from "@/components/group-list";
 import GiftList, { GiftListModes } from "@/components/gift-list";
 import Gift from "@/models/giftModel";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export default function Profile() {
     const { user, setUserState } = useUser();
@@ -79,6 +80,9 @@ export default function Profile() {
                         <p className="self-center ">
                             {profileData?.bio}
                         </p>
+                        <Link href={`/wishlists/${user?._id}`}  className="w-1/5 self-center mt-4">
+                            <Button className="w-full font-bold">See Wishlist</Button>
+                        </Link>
                         <h3 className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">Links</h3>
                         { profileData ? (profileData.links.length > 0 ? 
                             <ul className="mt-6 ml-6 list-disc [&>li]:mt-1">
@@ -93,8 +97,6 @@ export default function Profile() {
                             </div> : <p>No groups associated with this elf!</p>)
                         : <p>Loading...</p>
                         }
-                        <h3 className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">Wish List</h3>
-                        {/* {user?._id !== undefined && <GiftList id={user._id} mode={GiftListModes.GIVER}/>} */}
                     </div>
                 </Card>
             </div>

@@ -12,9 +12,8 @@ import { CircleUserRound } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import GroupList, { GroupListModes } from "@/components/group-list";
 import { usePathname } from "next/navigation";
-import GiftList, { GiftListModes } from "@/components/gift-list";
-import Gift from "@/models/giftModel";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export default function Profile() {
     const { toast } = useToast();
@@ -72,8 +71,8 @@ export default function Profile() {
             />
             <div className="w-full h-full flex flex-row justify-center align-center">
                 <Card className="m-5 w-full lg:w-3/4 xl:w-2/3 2xl:w-2/3 flex flex-col gap-4 justify-start">
-                    <div className="flex flex-col self-center m-10">
-                        <div className="flex flex-col justify-center items-center gap-3">
+                    <div className="flex flex-col self-center m-10 w-4/5">
+                        <div className="flex flex-col justify-center items-center gap-3 w-full">
                             <Avatar className="self-center w-45 h-45">
                                 <AvatarFallback><CircleUserRound className="self-center" color="grey" strokeWidth={1} size={60}/></AvatarFallback>
                             </Avatar>
@@ -85,16 +84,23 @@ export default function Profile() {
                         <p className="self-center ">
                             {profileData?.bio}
                         </p>
+                        <Link href={`/wishlists/${userInfo?._id}`}  className="w-1/5 self-center mt-4">
+                            <Button className="w-full font-bold">See Wishlist</Button>
+                        </Link>
                         <h3 className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">Links</h3>
-                        <ul className="mt-6 ml-6 list-disc [&>li]:mt-1">
-                            {profileData?.links.map((link, i) => <li key={i}><Link href={link} style={{ textDecoration: 'underline' }}>{link}</Link></li>)}
-                        </ul>
+                        { profileData ? (profileData.links.length > 0 ? 
+                            <ul className="mt-6 ml-6 list-disc [&>li]:mt-1">
+                                {profileData?.links.map((link, i) => <li key={i}><Link href={link} style={{ textDecoration: 'underline' }}>{link}</Link></li>)}
+                            </ul> : <p>No links associated with this elf!</p>)
+                        : <p>Loading...</p>
+                        }
                         <h3 className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">Groups</h3>
-                        <div className="flex flex-col justify-center items-center w-full">
-                            {profileData !== null && profileData.group_ids.length > 0 && <GroupList ids={profileData.group_ids} mode={GroupListModes.SOME}/>}
-                        </div>
-                        <h3 className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">Gifts</h3>
-                        {/* {user?._id !== undefined && <GiftList id={user._id} mode={GiftListModes.GIVER}/>} */}
+                        { profileData ? (profileData.group_ids.length > 0 ? 
+                            <div className="flex flex-col justify-center items-center w-full">
+                                {profileData !== null && profileData.group_ids.length > 0 && <GroupList ids={profileData.group_ids} mode={GroupListModes.SOME}/>}
+                            </div> : <p>No groups associated with this elf!</p>)
+                        : <p>Loading...</p>
+                        }
                     </div>
                 </Card>
             </div>
