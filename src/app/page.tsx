@@ -20,7 +20,6 @@ export default function Home() {
     const getDailyProducts = async () => {
       try {
         const response = await axios.get(`/api/products/daily`);
-        console.log(response);
         const products = response.data.products;
 
         setProductsOfTheDay(products)
@@ -82,7 +81,7 @@ export default function Home() {
             Products of the Day
           </CardTitle>
           <CardDescription>
-            Explore some hot new products!
+            Looking to find that next amazing gift? Check out some of the hot products of the day!
           </CardDescription>
           <CardContent>
             {

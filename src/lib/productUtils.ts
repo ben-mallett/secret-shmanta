@@ -26,11 +26,9 @@ export const getDailyProducts = async() => {
     }
 
     const productIds = [1, 1, 1, 1, 1].map((productId) => productId * getRandomInt(1, 99))
-    console.log(productIds);
 
     const products = await Promise.all(productIds.map(async (productId) => {
         return await getProductById(productId);
     }))
-    console.log(products);
     return products;
 }

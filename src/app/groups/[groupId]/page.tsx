@@ -57,7 +57,6 @@ export default function GroupPage() {
             setUserIds([...userIds, user ? user._id : ""])
             setRefresh(refresh + 1);
         } catch (error: any) {
-            console.log(error);
             toast({
                 title: "This is weird...",
                 description: `Joining the group failed: ${error.response.data.message}`

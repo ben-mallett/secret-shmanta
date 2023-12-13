@@ -21,10 +21,14 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
     try {
         const { id, username, role } = getTokenData(request);
+
         if (role === "PARTICIPANT") {
             return NextResponse.json({error: "User not authorized to create groups. Must be Admin or Host role."}, {status: 400})
         }
+
         const { name, description } = await request.json();
+
+        console.log(`${name}, ${description}`)
 
         const created = new Group({
             name,

@@ -36,7 +36,7 @@ export function CreateGroup() {
                 name,
                 description
             }
-
+            
             const response = await axios.post("/api/groups", data)
 
             toast({
@@ -48,6 +48,7 @@ export function CreateGroup() {
                 ),
             })
         } catch (error : any) {
+            console.log(error);
             toast({
                 title: "Error creating group",
                 description: `Something went wrong: ${error.response.data.message}`

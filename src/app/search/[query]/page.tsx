@@ -29,7 +29,6 @@ export default function Home() {
                 const prods = response.data.products;
                 setProducts(prods);
             } catch (error : any) {
-                console.log(error);
                 toast({
                     title: "Uh oh... Something went wrong.",
                     description: `Error getting search results: ${error.response.data.error}`

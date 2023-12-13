@@ -146,7 +146,7 @@ export function AccountForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" variant="default">Update profile</Button>
+                <Button type="submit" variant="default">Update account</Button>
             </form>
             </Form>
         </div>
