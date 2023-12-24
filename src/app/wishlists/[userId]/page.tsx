@@ -73,7 +73,7 @@ export default function Wishlist() {
                     <p>Here's a list of items that they may want this holiday season</p>
                     {
                         wishlistInfo && wishlistInfo.length > 0?
-                        <div key={wishlistInfo}>
+                        <div key={wishlistInfo} className="w-4/5">
                             <ProductList products={wishlistInfo}/>
                         </div> :  <h3 className="m-8 scroll-m-20 text-2xl font-semibold tracking-tight">This elf doesn't want any gifts (yet)</h3>
                     }
